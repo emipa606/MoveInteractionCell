@@ -68,6 +68,11 @@ public static class MoveInteractionCell
 
     public static IntVec3 OffsetFromActualPlace(IntVec3 actualPlace, Building building)
     {
+        if (building.Rotation == Rot4.East || building.Rotation == Rot4.West)
+        {
+            return (actualPlace - building.Position).RotatedBy(building.Rotation.Opposite);
+        }
+
         return (actualPlace - building.Position).RotatedBy(building.Rotation);
     }
 
