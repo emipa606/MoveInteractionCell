@@ -1,5 +1,8 @@
 # Changelog for MoveInteractionCell
 
+1.5.2 - Added 1.4 version
+
+
 1.5.1 - The rotating spot locations should behave better on buildings facing east/west
 
 
