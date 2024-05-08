@@ -1,5 +1,9 @@
 # Changelog for MoveInteractionCell
 
+1.5.3 - Added option to reset spot-position with right-click
+Used DeepL to update translations for ChineseSimplified, French, German
+
+
 1.5.2 - Added 1.4 version
 
 

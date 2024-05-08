@@ -124,6 +124,28 @@ public static class MoveInteractionCell
 
         var currentIndex = validCells.IndexOf(currentCell);
 
+        if (Event.current.button == 1)
+        {
+            var originalCell = ActualPlaceFromOffset(building.def.interactionCellOffset, building);
+            if (validCells.Contains(originalCell))
+            {
+                if (Overrides.ContainsKey(building))
+                {
+                    Overrides.Remove(building);
+                }
+
+                if (cellTracker.CustomInteractionCells.ContainsKey(building))
+                {
+                    cellTracker.CustomInteractionCells.Remove(building);
+                }
+
+                return;
+            }
+
+            Messages.Message("MIC.ResetCellFail".Translate(building.LabelCap), building, MessageTypeDefOf.RejectInput);
+            return;
+        }
+
         if (Event.current.shift)
         {
             currentIndex++;
