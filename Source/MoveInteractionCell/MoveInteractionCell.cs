@@ -22,7 +22,7 @@ public static class MoveInteractionCell
         BuildingsWithInteractionCell =
             DefDatabase<ThingDef>.AllDefsListForReading.Where(def =>
                 def.hasInteractionCell && def.multipleInteractionCellOffsets.NullOrEmpty() &&
-                def.interactionCellOffset != IntVec3.Zero).ToList();
+                def.interactionCellOffset != IntVec3.Zero && def.thingClass != typeof(Building_VoidMonolith)).ToList();
         BlueprintDummy = new Thing();
         new Harmony("Mlie.MoveInteractionCell").PatchAll(Assembly.GetExecutingAssembly());
     }
@@ -118,11 +118,37 @@ public static class MoveInteractionCell
 
         var currentOffset =
             cellTracker.CustomInteractionCells.GetValueOrDefault(building, building.def.interactionCellOffset);
+        if (currentOffset == default)
+        {
+            currentOffset = building.def.interactionCellOffset;
+        }
+
         var currentCell = ActualPlaceFromOffset(currentOffset, building);
 
-        var validCells = GenAdj.CellsAdjacent8Way(building).Where(vec3 => ValidateNewSpot(vec3, building.Map)).ToList();
+        var validCells = building.OccupiedRect().AdjacentCells.Where(vec3 => ValidateNewSpot(vec3, building.Map))
+            .ToList();
+        var center = building.Position;
 
-        var currentIndex = validCells.IndexOf(currentCell);
+        validCells.Sort((a, b) =>
+        {
+            var aAngle = Mathf.Atan2(a.z - center.z, a.x - center.x);
+            var bAngle = Mathf.Atan2(b.z - center.z, b.x - center.x);
+
+            return aAngle.CompareTo(bAngle);
+        });
+
+        var currentIndex = 0;
+        if (!validCells.Contains(currentCell))
+        {
+            if (cellTracker.CustomInteractionCells.ContainsKey(building))
+            {
+                cellTracker.CustomInteractionCells.Remove(building);
+            }
+        }
+        else
+        {
+            currentIndex = validCells.IndexOf(currentCell);
+        }
 
         if (Event.current.button == 1)
         {

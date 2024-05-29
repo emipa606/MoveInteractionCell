@@ -1,9 +1,10 @@
-# MoveInteractionCell
+# [Move Interaction Cell](https://steamcommunity.com/sharedfiles/filedetails/?id=3235960401)
 
 ![Image](https://i.imgur.com/iCj5o7O.png)
 
 Having trouble fitting all workbenches in that crowded kitchen and wished you could just move that spot one step?
 This mod adds an option to move the interaction spot of buildings.
+Click it to rotate the spot, hold in Shift to rotate in the opposite direction, right click to reset.
 
 Idea by: tsuzumi
 
