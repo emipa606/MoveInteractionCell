@@ -2,5 +2,13 @@
   "Continued": false,
   "CanAdd": "0",
   "CanRemove": "0",
-  "PreviewVersion": "1.5"
+  "PreviewVersion": "1.5",
+  "SocialImageSet": true,
+  "FundingSet": true,
+  "SearchTags": [
+    "moving",
+    " rotate",
+    " spot"
+  ],
+  "LastXmlCleaning": "2025-03-29T20:09:11.360669+01:00"
 }

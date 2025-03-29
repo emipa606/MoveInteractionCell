@@ -1,5 +1,8 @@
 # Changelog for MoveInteractionCell
 
+1.5.5 - Should now correctly remove any saved cell when a building is destroyed
+
+
 1.5.4 - Clears out null-values when saving. Should rotate the cells in a more ordered way, hopefully.
 
 

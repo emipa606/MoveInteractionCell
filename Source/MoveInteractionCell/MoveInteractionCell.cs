@@ -59,7 +59,6 @@ public static class MoveInteractionCell
         return true;
     }
 
-
     public static IntVec3 ActualPlaceFromOffset(IntVec3 offset, Building building)
     {
         return offset.RotatedBy(building.Rotation) + building.Position;
@@ -155,16 +154,7 @@ public static class MoveInteractionCell
             var originalCell = ActualPlaceFromOffset(building.def.interactionCellOffset, building);
             if (validCells.Contains(originalCell))
             {
-                if (Overrides.ContainsKey(building))
-                {
-                    Overrides.Remove(building);
-                }
-
-                if (cellTracker.CustomInteractionCells.ContainsKey(building))
-                {
-                    cellTracker.CustomInteractionCells.Remove(building);
-                }
-
+                ResetOverrideCell(building);
                 return;
             }
 
@@ -210,6 +200,20 @@ public static class MoveInteractionCell
         }
 
         cellTracker.CustomInteractionCells[building] = newOffset;
+    }
+
+    public static void ResetOverrideCell(Thing building)
+    {
+        var cellTracker = Current.Game.GetComponent<GameComponent_InteractionCellTracker>();
+        if (Overrides.ContainsKey(building))
+        {
+            Overrides.Remove(building);
+        }
+
+        if (cellTracker.CustomInteractionCells.ContainsKey(building))
+        {
+            cellTracker.CustomInteractionCells.Remove(building);
+        }
     }
 
     public static Thing GetSelectedItem()

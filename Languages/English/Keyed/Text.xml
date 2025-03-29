@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <MIC.RotateCell.label>Rotate interaction cell</MIC.RotateCell.label>
   <MIC.RotateCell.desc>Hold SHIFT to change rotation, right click to reset</MIC.RotateCell.desc>
