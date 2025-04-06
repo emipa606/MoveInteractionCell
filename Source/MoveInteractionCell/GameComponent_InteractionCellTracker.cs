@@ -16,7 +16,7 @@ public class GameComponent_InteractionCellTracker : GameComponent
     public override void ExposeData()
     {
         base.ExposeData();
-        if (Scribe.mode == LoadSaveMode.Saving)
+        if (Scribe.mode == LoadSaveMode.Saving || Scribe.mode == LoadSaveMode.PostLoadInit)
         {
             var keysToRemove = new List<Thing>();
             foreach (var pair in CustomInteractionCells)

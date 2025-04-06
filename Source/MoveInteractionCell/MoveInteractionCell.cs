@@ -214,6 +214,21 @@ public static class MoveInteractionCell
         {
             cellTracker.CustomInteractionCells.Remove(building);
         }
+
+        if (building is not Blueprint && building is not Frame)
+        {
+            return;
+        }
+
+        if (Overrides.ContainsKey(BlueprintDummy))
+        {
+            Overrides.Remove(BlueprintDummy);
+        }
+
+        if (cellTracker.CustomInteractionCells.ContainsKey(BlueprintDummy))
+        {
+            cellTracker.CustomInteractionCells.Remove(BlueprintDummy);
+        }
     }
 
     public static Thing GetSelectedItem()
