@@ -2,7 +2,7 @@
   "Continued": false,
   "CanAdd": "0",
   "CanRemove": "0",
-  "PreviewVersion": "1.5",
+  "PreviewVersion": "1.6",
   "SocialImageSet": true,
   "FundingSet": true,
   "SearchTags": [
@@ -10,5 +10,11 @@
     " rotate",
     " spot"
   ],
-  "LastXmlCleaning": "2025-04-06T20:06:53.6991828+02:00"
+  "LastXmlCleaning": "2025-07-22T22:31:56.1713845+02:00",
+  "Patches": false,
+  "Defs": false,
+  "Assemblies": true,
+  "LinesOfCode": 16151,
+  "LinesOfXML": 0,
+  "CodeBaseSize": 67
 }

@@ -1,5 +1,8 @@
 # Changelog for MoveInteractionCell
 
+1.6.0 - Mod updated for 1.6 and passed autotests
+
+
 1.5.6 - Fixed blueprint handling, thanks to ZBCQ
 
 

@@ -5,7 +5,7 @@ namespace MoveInteractionCell;
 
 public class GameComponent_InteractionCellTracker : GameComponent
 {
-    public Dictionary<Thing, IntVec3> CustomInteractionCells = new Dictionary<Thing, IntVec3>();
+    public Dictionary<Thing, IntVec3> CustomInteractionCells = new();
     private List<Thing> customInteractionCellsKeys;
     private List<IntVec3> customInteractionCellsValues;
 

@@ -65,7 +65,7 @@ public static class MoveInteractionCell
     }
 
 
-    public static IntVec3 OffsetFromActualPlace(IntVec3 actualPlace, Building building)
+    private static IntVec3 offsetFromActualPlace(IntVec3 actualPlace, Building building)
     {
         if (building.Rotation == Rot4.East || building.Rotation == Rot4.West)
         {
@@ -76,7 +76,7 @@ public static class MoveInteractionCell
     }
 
 
-    public static bool ValidateNewSpot(IntVec3 position, Map map)
+    private static bool validateNewSpot(IntVec3 position, Map map)
     {
         if (!position.InBounds(map))
         {
@@ -110,10 +110,7 @@ public static class MoveInteractionCell
             return;
         }
 
-        if (cellTracker.CustomInteractionCells == null)
-        {
-            cellTracker.CustomInteractionCells = [];
-        }
+        cellTracker.CustomInteractionCells ??= [];
 
         var currentOffset =
             cellTracker.CustomInteractionCells.GetValueOrDefault(building, building.def.interactionCellOffset);
@@ -124,7 +121,7 @@ public static class MoveInteractionCell
 
         var currentCell = ActualPlaceFromOffset(currentOffset, building);
 
-        var validCells = building.OccupiedRect().AdjacentCells.Where(vec3 => ValidateNewSpot(vec3, building.Map))
+        var validCells = building.OccupiedRect().AdjacentCells.Where(vec3 => validateNewSpot(vec3, building.Map))
             .ToList();
         var center = building.Position;
 
@@ -139,10 +136,7 @@ public static class MoveInteractionCell
         var currentIndex = 0;
         if (!validCells.Contains(currentCell))
         {
-            if (cellTracker.CustomInteractionCells.ContainsKey(building))
-            {
-                cellTracker.CustomInteractionCells.Remove(building);
-            }
+            cellTracker.CustomInteractionCells.Remove(building);
         }
         else
         {
@@ -181,20 +175,16 @@ public static class MoveInteractionCell
 
         currentCell = validCells[currentIndex];
 
-        var newOffset = OffsetFromActualPlace(currentCell, building);
+        var newOffset = offsetFromActualPlace(currentCell, building);
 
         if (newOffset == building.def.interactionCellOffset)
         {
-            if (!cellTracker.CustomInteractionCells.ContainsKey(building))
+            if (!cellTracker.CustomInteractionCells.Remove(building))
             {
                 return;
             }
 
-            cellTracker.CustomInteractionCells.Remove(building);
-            if (Overrides.ContainsKey(building))
-            {
-                Overrides.Remove(building);
-            }
+            Overrides.Remove(building);
 
             return;
         }
@@ -205,45 +195,31 @@ public static class MoveInteractionCell
     public static void ResetOverrideCell(Thing building)
     {
         var cellTracker = Current.Game.GetComponent<GameComponent_InteractionCellTracker>();
-        if (Overrides.ContainsKey(building))
-        {
-            Overrides.Remove(building);
-        }
+        Overrides.Remove(building);
 
-        if (cellTracker.CustomInteractionCells.ContainsKey(building))
-        {
-            cellTracker.CustomInteractionCells.Remove(building);
-        }
+        cellTracker.CustomInteractionCells.Remove(building);
 
         if (building is not Blueprint && building is not Frame)
         {
             return;
         }
 
-        if (Overrides.ContainsKey(BlueprintDummy))
-        {
-            Overrides.Remove(BlueprintDummy);
-        }
+        Overrides.Remove(BlueprintDummy);
 
-        if (cellTracker.CustomInteractionCells.ContainsKey(BlueprintDummy))
-        {
-            cellTracker.CustomInteractionCells.Remove(BlueprintDummy);
-        }
+        cellTracker.CustomInteractionCells.Remove(BlueprintDummy);
     }
 
     public static Thing GetSelectedItem()
     {
         var singleSelectedThing = Find.Selector.SingleSelectedThing;
-        if (singleSelectedThing is MinifiedThing)
+        switch (singleSelectedThing)
         {
-            return singleSelectedThing.GetInnerIfMinified();
+            case MinifiedThing:
+                return singleSelectedThing.GetInnerIfMinified();
+            case Building building when building.def.Minifiable:
+                return singleSelectedThing;
+            default:
+                return null;
         }
-
-        if (singleSelectedThing is Building building && building.def.Minifiable)
-        {
-            return singleSelectedThing;
-        }
-
-        return null;
     }
 }
