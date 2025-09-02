@@ -1,44 +1,40 @@
-# GitHub Copilot Instructions for RimWorld Modding Project
+# GitHub Copilot Instructions for the Move Interaction Cell Mod
 
-## Mod Overview and Purpose
+## Overview and Purpose
 
-This mod is designed to enhance the interaction mechanics of RimWorld by modifying how interaction cells are determined and handled, improving both usability and gameplay dynamics. The purpose is to allow players more control and flexibility in placing objects where interaction cells overlap, reducing frustration in building layouts and improving the overall experience.
+The **Move Interaction Cell** mod for RimWorld is designed to give players more control over the placement of interaction spots for workbenches and other buildable structures. This is particularly useful for efficiently organizing space in congested areas like kitchens or workshops, allowing players to rotate or relocate interaction spots for better workflow and aesthetic arrangements. The mod introduces a simple user interface feature that enables players to rotate the interaction spot of buildings with the click of a button or revert to default positions, enabling greater freedom and customization in base management.
 
 ## Key Features and Systems
 
-1. **Dynamic Interaction Cell Calculation**: The mod dynamically calculates and updates interaction cells, allowing players to place items more freely without the strict overlap constraints found in the vanilla game.
-   
-2. **Prevent Interaction Spot Overlap**: It introduces a system to prevent interaction spot overlap, giving players feedback when placements would cause issues and providing alternative solutions.
-
-3. **Blueprint Placement Management**: Adjustments are made to blueprint placements, ensuring compatibility with customized interaction cells.
-   
-4. **Game Component Tracking**: A new `GameComponent` is included to track and manage interactions and placements across game sessions efficiently.
-
-5. **Enhanced Gizmo Systems**: Custom gizmos are added for better player control over object interactions.
+- **Interaction Spot Movement**: Players can click to rotate the interaction spot of any building, hold Shift to rotate in the opposite direction, and right-click to reset to the default position.
+- **UI Integration**: Adds a simple and intuitive user interface to handle interaction spot changes through in-game gizmos.
+- **Gameplay Flexibility**: Enhances base-building flexibility by allowing the rearrangement of critical interaction points, optimizing space usage and work efficiency.
 
 ## Coding Patterns and Conventions
 
-- The project primarily uses static classes for utility functions to ensure optimal performance and clarity.
-- Classes related to the game components leverage inheritance from RimWorld’s base classes to integrate seamlessly with the game’s lifecycle.
-- Methods are designed to be concise, with a focus on single-responsibility principles, enhancing readability and maintainability.
-- The naming convention follows PascalCase for class and method names, promoting consistency with C# standards.
+- **Static Utility Classes**: Many functionalities are implemented using static classes and methods for straightforward utility access across the mod.
+- **Naming Conventions**: Classes and methods follow PascalCase naming conventions for clarity and consistency with C# guidelines.
+- **GameComponent Utilization**: Core tracking functionality is encapsulated within a custom `GameComponent`, which manages interaction cell data efficiently across game sessions.
 
 ## XML Integration
 
-While the core of the mod is built in C#, XML files are typically used in RimWorld mods to define properties and settings. This mod does not directly rely on XML configuration in the provided summary but can easily integrate XML definitions if needed for future features.
+- **Versatility through XML**: Although primarily a C# mod, the integration of XML definitions helps configure various in-game text, default settings, and potential custom object descriptors.
+- **Configuration**: Ensure XML files (if any) are laid out clearly and accurately reflect the mod's functional expectations and user interface labels.
 
 ## Harmony Patching
 
-Harmony is used extensively to patch the original game methods without modifying them directly, ensuring compatibility with future game updates and other mods. Key areas patched include:
-
-- Methods dealing with interaction cell determination.
-- Gizmo and blueprint handling in the vanilla codebase.
+- **Harmony Use**: The mod employs Harmony for runtime patching of existing RimWorld methods, ensuring seamless integration and minimal conflict with vanilla or other modded content.
+- **Key Entries**:
+  - `Building_GetGizmos`: Implements custom gizmo logic for rotating and resetting interaction cells.
+  - `GameComponent_InteractionCellTracker`: Extends game components to track and manage interaction spot changes.
+  
+- **Patch Targets**: Ensure patch targets are precisely defined and avoid unnecessary patches to maintain game performance and reduce potential conflicts.
 
 ## Suggestions for Copilot
 
-- **Pattern Recognition**: Utilize Copilot to identify and suggest repetitive patterns in the codebase that can be abstracted or optimized for better performance.
-- **Enhanced Gizmo Features**: Use Copilot to suggest additional user controls for the gizmos, enabling smoother user interaction.
-- **Expand XML Configuration**: Although not used currently, Copilot can suggest XML schema setups that align with future game or mod feature extensions.
-- **Debugging Assistance**: Provide debugging outputs to assist in pinpointing miscalculations with interaction cells during gameplay.
+- **Helper Functions**: Use Copilot to assist in writing utilities or extension methods that can generalize recurring patterns in your code, reducing redundancy and improving readability.
+- **Debugging and Logging**: Enhance debugging by suggesting additional logging functionality, especially when tracking interaction spot changes or during gameplay element integration.
+- **XML Definition Autofill**: Employ Copilot to automate repetitive XML entry definitions where applicable, ensuring they align with C# configurations and game characteristics.
+- **Harmony Patch Definition**: Use Copilot's predictive capabilities to suggest method signatures and patch frameworks, assisting in the quick establishment of new patches or debugging existing ones.
 
-With these guidelines, GitHub Copilot should help streamline development and provide valuable suggestions for expanding and enhancing mod features.
+By following these guidelines, collaboration with GitHub Copilot can be greatly enhanced, making the Move Interaction Cell mod not only more efficient to work with but also more robust and user-friendly.

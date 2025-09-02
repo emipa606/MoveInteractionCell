@@ -12,7 +12,9 @@ namespace MoveInteractionCell;
 public static class MoveInteractionCell
 {
     public static readonly List<ThingDef> BuildingsWithInteractionCell;
-    public static readonly Dictionary<Thing, OverrideInfo> Overrides = [];
+
+    public static readonly Dictionary<Thing, OverrideInfo> Overrides = new(ReferenceEqualityComparer<Thing>.Instance);
+
     public static bool InterceptThingList;
     public static bool InterceptThingListFast;
     public static readonly Thing BlueprintDummy;
@@ -29,7 +31,16 @@ public static class MoveInteractionCell
 
     public static bool SetOverride(Thing building, bool useDummyThing = false)
     {
+        if (building == null)
+        {
+            return false;
+        }
+
         var firstThing = building.GetInnerIfMinified();
+        if (firstThing == null || firstThing.def == null)
+        {
+            return false;
+        }
 
         if (!BuildingsWithInteractionCell.Contains(firstThing.def))
         {
@@ -64,7 +75,6 @@ public static class MoveInteractionCell
         return offset.RotatedBy(building.Rotation) + building.Position;
     }
 
-
     private static IntVec3 offsetFromActualPlace(IntVec3 actualPlace, Building building)
     {
         if (building.Rotation == Rot4.East || building.Rotation == Rot4.West)
@@ -74,7 +84,6 @@ public static class MoveInteractionCell
 
         return (actualPlace - building.Position).RotatedBy(building.Rotation);
     }
-
 
     private static bool validateNewSpot(IntVec3 position, Map map)
     {
@@ -100,7 +109,6 @@ public static class MoveInteractionCell
 
         return true;
     }
-
 
     public static void RotateSpot(Building building)
     {
@@ -205,8 +213,7 @@ public static class MoveInteractionCell
         }
 
         Overrides.Remove(BlueprintDummy);
-
-        cellTracker.CustomInteractionCells.Remove(BlueprintDummy);
+        // Do NOT touch CustomInteractionCells with BlueprintDummy; it was never added there.
     }
 
     public static Thing GetSelectedItem()
